@@ -1,10 +1,6 @@
 package com.pasha.validator
 
 
-//private sealed class ValidationException(message: String) : RuntimeException(message) {
-//    class PasswordValidException(message: String) : ValidationException(message)
-//    class EmailValidException(message: String) : ValidationException(message)
-//}
 
 internal class Validator private constructor() {
 

@@ -1,7 +1,6 @@
 package com.pasha.repositories.users
 
 import com.pasha.models.users.CredentialsDto
-import java.util.UUID
 
 interface UsersRepository {
     suspend fun isUserExist(email: String): Boolean

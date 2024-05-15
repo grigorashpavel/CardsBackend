@@ -1,9 +1,9 @@
 package com.pasha.config
 
 import io.ktor.server.config.*
-import org.koin.core.annotation.Singleton
+import org.koin.core.annotation.Single
 
-@Singleton
+@Single
 class AppConfig {
     val appConfig = ApplicationConfig("application.conf")
 }

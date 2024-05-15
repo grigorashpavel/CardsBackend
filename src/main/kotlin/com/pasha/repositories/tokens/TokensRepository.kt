@@ -2,7 +2,6 @@ package com.pasha.repositories.tokens
 
 import com.pasha.models.users.CredentialsDto
 import com.pasha.services.tokens.Tokens
-import java.util.UUID
 
 interface TokensRepository {
     fun generateTokens(credentials: CredentialsDto): Tokens

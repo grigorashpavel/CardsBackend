@@ -6,15 +6,13 @@ import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.IncorrectClaimException
 import com.pasha.config.AppConfig
 import com.pasha.models.users.CredentialsDto
-import com.pasha.repositories.tokens.TokensRepository
-import com.pasha.repositories.users.UsersRepository
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import org.koin.core.annotation.Single
-import org.koin.core.annotation.Singleton
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
+
 
 sealed class TokenException(message: String) : RuntimeException(message) {
     class InvalidTokenException(message: String) : TokenException(message)

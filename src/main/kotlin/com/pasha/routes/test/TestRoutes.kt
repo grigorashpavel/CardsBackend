@@ -1,7 +1,6 @@
 package com.pasha.routes.test
 
 import com.pasha.models.users.CredentialsDto
-import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*

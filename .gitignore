@@ -4,9 +4,10 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-database/
+test/
 src/main/resources/application.conf
 src/test
+/database/
 
 ### STS ###
 .apt_generated

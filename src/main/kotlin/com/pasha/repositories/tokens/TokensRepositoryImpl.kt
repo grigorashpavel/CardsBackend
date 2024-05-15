@@ -4,14 +4,14 @@ import com.pasha.database.entities.TokenEntity
 import com.pasha.models.users.CredentialsDto
 import com.pasha.services.database.DatabaseService
 import com.pasha.services.tokens.TokensService
-import org.koin.core.annotation.Singleton
-import java.util.UUID
+import org.koin.core.annotation.Single
+import java.util.*
 
 
 private typealias ModelTokens = com.pasha.services.tokens.Tokens
 private typealias TableTokens = com.pasha.database.entities.Tokens
 
-@Singleton
+@Single
 class TokensRepositoryImpl(
     private val tokensService: TokensService,
     private val databaseService: DatabaseService

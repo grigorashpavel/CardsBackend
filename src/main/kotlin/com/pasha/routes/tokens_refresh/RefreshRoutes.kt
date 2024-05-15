@@ -3,8 +3,6 @@ package com.pasha.routes.tokens_refresh
 import com.auth0.jwt.impl.JWTParser
 import com.pasha.models.users.CredentialsDto
 import com.pasha.repositories.tokens.TokensRepository
-import com.pasha.repositories.users.UsersRepository
-import com.pasha.services.tokens.TokensService
 import com.pasha.util.Constants
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -12,7 +10,6 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.koin.ktor.ext.inject
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 

@@ -4,12 +4,10 @@ import com.pasha.database.entities.*
 import com.pasha.models.users.CredentialsDto
 import com.pasha.services.database.DatabaseService
 import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
-import org.koin.core.annotation.Singleton
-import java.util.UUID
+import org.koin.core.annotation.Single
+import java.util.*
 
-@Singleton
+@Single
 class UserRepositoryImpl(
     private val databaseService: DatabaseService
 ) : UsersRepository {

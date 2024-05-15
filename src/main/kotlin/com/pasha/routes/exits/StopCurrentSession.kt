@@ -7,7 +7,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-// Здесь пароль и email будет пустым
+
 fun Route.stopCurrentSession(
     tokensRepository: TokensRepository
 ) {
