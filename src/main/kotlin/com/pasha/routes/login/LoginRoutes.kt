@@ -17,7 +17,7 @@ fun Route.loginRoute(
     usersRepository: UsersRepository,
     tokensRepository: TokensRepository
 ) {
-    post("/login") {
+    post("/auth/login") {
         val credentials = call.receive<CredentialsDto>()
         if (!Validator.isEmailValid(credentials.email) || !Validator.isPasswordValid(credentials.password)) {
             call.respond(HttpStatusCode.Unauthorized, "Bad Auth Data")

@@ -63,8 +63,7 @@ class TokensService(private val config: AppConfig) {
 
     fun generateTokens(credentials: CredentialsDto): Tokens {
         val zeroZone = ZoneOffset.UTC
-        //val accessExpireDate = Date.from(LocalDateTime.now().plusMinutes(3).toInstant(zeroZone))
-        val accessExpireDate = Date.from(LocalDateTime.now().plusHours(3).toInstant(zeroZone))
+        val accessExpireDate = Date.from(LocalDateTime.now().plusMinutes(3).toInstant(zeroZone))
         val refreshExpireDate = Date.from(LocalDateTime.now().plusDays(7).toInstant(zeroZone))
 
         val accessId = UUID.randomUUID().toString()

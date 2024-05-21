@@ -16,7 +16,7 @@ fun Route.registerRoute(
     usersRepository: UsersRepository,
     tokensRepository: TokensRepository
 ) {
-    post("/register") {
+    post("/auth/register") {
         val credentials = call.receive<CredentialsDto>()
         if (!Validator.isEmailValid(credentials.email) || !Validator.isPasswordValid(credentials.password)) {
             call.respond(HttpStatusCode.BadRequest, "Bad register Data!")

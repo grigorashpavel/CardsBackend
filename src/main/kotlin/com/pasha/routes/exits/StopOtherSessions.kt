@@ -14,7 +14,7 @@ fun Route.stopOtherSessions(
     usersRepository: UsersRepository,
     tokensRepository: TokensRepository
 ) {
-    post("/stop-other-sessions") {
+    post("/sessions/stop-other") {
         val credentials = call.receive<CredentialsDto>()
         val deviceId = credentials.deviceId
         val email = credentials.email

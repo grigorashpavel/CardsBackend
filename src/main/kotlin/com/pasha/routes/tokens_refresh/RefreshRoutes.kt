@@ -17,7 +17,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 @OptIn(ExperimentalEncodingApi::class)
 fun Route.refreshTokensRoute(tokensRepository: TokensRepository) {
     authenticate("refresh-jwt") {
-        post("/refresh") {
+        post("/sessions/extend-current") {
             val token = call.request.headers[HttpHeaders.Authorization]?.split(' ')?.get(1)
             val deviceId = call.receive<CredentialsDto>().deviceId
 

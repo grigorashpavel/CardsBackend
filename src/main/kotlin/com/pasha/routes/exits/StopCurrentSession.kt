@@ -11,7 +11,7 @@ import io.ktor.server.routing.*
 fun Route.stopCurrentSession(
     tokensRepository: TokensRepository
 ) {
-    post("/stop-current-session") {
+    post("/sessions/stop-current") {
         val deviceId = call.receive<CredentialsDto>().deviceId
         tokensRepository.revokeCurrentDeviceTokens(deviceId)
 
