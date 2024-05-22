@@ -29,5 +29,10 @@ object ColumnData {
     const val COL_REVOKE_STATUS_NAME = "revoked"
     const val COL_EXPIRE_TIME_NAME = "expire_time"
 
+    // CARDS
+    const val COL_CARD_NAME_NAME = "card_name"
+    const val CARD_NAME_LEN = 32
+    const val COL_CARD_DOCUMENT_NAME = "card_document"
+
     const val SYSTEM_PATH_LEN = 255
 }
