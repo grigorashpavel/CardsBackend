@@ -53,6 +53,17 @@ fun Application.configureSecurity() {
                 call.respond(HttpStatusCode.Unauthorized, "")
             }
         }
+        jwt("jwt") {
+            realm = jwtService.realm
+            verifier(jwtService.verifyJWT())
+            validate { token ->
+                if (!isTokenCorrupted(token)) jwtService.validateToken(token) else null
+            }
+            challenge { _, realm ->
+                setupResponseHeaders(call, realm)
+                call.respond(HttpStatusCode.Unauthorized, "")
+            }
+        }
     }
 }
 

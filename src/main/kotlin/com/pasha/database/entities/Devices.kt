@@ -14,6 +14,7 @@ object Devices : IntIdTable() {
 class DeviceEntity(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<DeviceEntity>(Devices)
 
+    val entryId: Int get() = id.value
     var deviceId by Devices.deviceId
     var userId by Devices.userId
 }

@@ -64,7 +64,8 @@ class TokensService(private val config: AppConfig) {
     fun generateTokens(credentials: CredentialsDto): Tokens {
         val zeroZone = ZoneOffset.UTC
         val accessExpireDate = Date.from(LocalDateTime.now().plusMinutes(3).toInstant(zeroZone))
-        val refreshExpireDate = Date.from(LocalDateTime.now().plusDays(7).toInstant(zeroZone))
+        //val refreshExpireDate = Date.from(LocalDateTime.now().plusDays(7).toInstant(zeroZone))
+        val refreshExpireDate = Date.from(LocalDateTime.now().toInstant(zeroZone))
 
         val accessId = UUID.randomUUID().toString()
         val refreshId = UUID.randomUUID().toString()
@@ -93,9 +94,33 @@ class TokensService(private val config: AppConfig) {
         return result
     }
 
+    /**
+     * Используется для валидации токена без надобности проверки типа.
+     * Не стоит использовать нигде, кроме как для проверки токена
+     * на Expired.
+     */
+    fun verifyJWT(): JWTVerifier {
+        val result = try {
+            JWT.require(Algorithm.HMAC256(secret))
+                .withAudience(audience)
+                .withIssuer(issuer)
+                .build()
+        } catch (e: Exception) {
+            throw TokenException.InvalidTokenException("Token incorrect")
+        } catch (claimException: IncorrectClaimException) {
+            throw TokenException.InvalidTokenException("Token type incorrect")
+        }
+        return result
+    }
+
     fun validateToken(token: JWTCredential): Principal? {
         return if (token.isNotExpired()) JWTPrincipal(token.payload) else null
     }
 
-    private fun JWTCredential.isNotExpired() = payload.expiresAt.time > System.currentTimeMillis()
+    private fun JWTCredential.isNotExpired(): Boolean {
+        val zeroZone = ZoneOffset.UTC
+        val currentTime = Date.from(LocalDateTime.now().toInstant(zeroZone)).time
+
+        return payload.expiresAt.time > currentTime
+    }
 }

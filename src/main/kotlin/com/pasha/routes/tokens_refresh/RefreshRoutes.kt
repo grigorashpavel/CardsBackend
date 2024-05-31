@@ -18,6 +18,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 fun Route.refreshTokensRoute(tokensRepository: TokensRepository) {
     authenticate("refresh-jwt") {
         post("/sessions/extend-current") {
+            println("Authorization-${call.request.headers[HttpHeaders.Authorization]}")
             val token = call.request.headers[HttpHeaders.Authorization]?.split(' ')?.get(1)
             val deviceId = call.receive<CredentialsDto>().deviceId
 
@@ -28,7 +29,7 @@ fun Route.refreshTokensRoute(tokensRepository: TokensRepository) {
                 tokensRepository.revokeTokensByDevicesId(listOf(deviceId))
 
                 val email = payload.subject
-                val tokens = tokensRepository.generateTokens(CredentialsDto(email, "", ""))
+                val tokens = tokensRepository.generateTokens(CredentialsDto(email, "", deviceId))
 
                 tokensRepository.registerTokens(tokens, deviceId)
 

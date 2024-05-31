@@ -17,7 +17,8 @@ object Tokens : UUIDTable() {
 
 class TokenEntity(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<TokenEntity>(Tokens)
-    var tokenId by Tokens.id
+
+    val tokenId: UUID get() = id.value
     var isRevoked by Tokens.revoked
     var expireTime by Tokens.expireTime
     var deviceId by Tokens.deviceId

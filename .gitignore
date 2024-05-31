@@ -9,6 +9,8 @@ src/main/resources/application.conf
 src/test
 /database/
 
+*.txt
+
 ### STS ###
 .apt_generated
 .classpath

@@ -20,7 +20,7 @@ class UserRepositoryImpl(
             val username = getRandomUsername()
 
             val userId = UUID.randomUUID()
-            UserEntity.new(userId) {
+            UserEntity.new(id = userId) {
                 this.username = username
                 password = credentials.password
                 phoneNumber = username

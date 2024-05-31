@@ -19,7 +19,7 @@ object Users : UUIDTable() {
 class UserEntity(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<UserEntity>(Users)
 
-    var userId by Users.id
+    val userId: UUID get() = id.value
     var username by Users.username
     var avatarPath by Users.avatarPath
     var password by Users.password

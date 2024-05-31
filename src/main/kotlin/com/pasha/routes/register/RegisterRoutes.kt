@@ -12,6 +12,10 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
+
+private const val ERROR_MSG_VALID = "Недопустимый логин или пароль!"
+private const val ERROR_MSG_USR_EXIST = "Такой пользователь уже существует."
+
 fun Route.registerRoute(
     usersRepository: UsersRepository,
     tokensRepository: TokensRepository
@@ -19,7 +23,7 @@ fun Route.registerRoute(
     post("/auth/register") {
         val credentials = call.receive<CredentialsDto>()
         if (!Validator.isEmailValid(credentials.email) || !Validator.isPasswordValid(credentials.password)) {
-            call.respond(HttpStatusCode.BadRequest, "Bad register Data!")
+            call.respond(HttpStatusCode.BadRequest, ERROR_MSG_VALID)
             return@post
         }
 
@@ -31,14 +35,14 @@ fun Route.registerRoute(
             tokensRepository.registerTokens(tokens, credentials.deviceId)
 
             call.respond(
-                HttpStatusCode.OK,
+                HttpStatusCode.Created,
                 hashMapOf(
                     Constants.ACCESS_TOKEN_TAG to tokens.accessToken.value,
                     Constants.REFRESH_TOKEN_TAG to tokens.refreshToken.value
                 )
             )
         } else {
-            call.respond(HttpStatusCode.BadRequest, "Bad register Data!")
+            call.respond(HttpStatusCode.BadRequest, ERROR_MSG_USR_EXIST)
         }
     }
 }
