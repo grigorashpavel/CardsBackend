@@ -4,6 +4,7 @@ import com.auth0.jwt.impl.JWTParser
 import com.pasha.models.users.CredentialsDto
 import com.pasha.repositories.tokens.TokensRepository
 import com.pasha.util.Constants
+import com.pasha.validator.TokenExtractor
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -19,16 +20,17 @@ fun Route.refreshTokensRoute(tokensRepository: TokensRepository) {
     authenticate("refresh-jwt") {
         post("/sessions/extend-current") {
             println("Authorization-${call.request.headers[HttpHeaders.Authorization]}")
-            val token = call.request.headers[HttpHeaders.Authorization]?.split(' ')?.get(1)
+            val token = TokenExtractor.extractToken(call.request)
             val deviceId = call.receive<CredentialsDto>().deviceId
 
             token?.let {
-                val (header, payloadEncode, signature) = token.split('.')
-                val payload = JWTParser().parsePayload(Base64.decode(payloadEncode).decodeToString())
+                //val (header, payloadEncode, signature) = token.split('.')
+                //JWTParser().parsePayload(Base64.decode(payloadEncode).decodeToString())
+                val payload = TokenExtractor.extractPayload(token)
 
                 tokensRepository.revokeTokensByDevicesId(listOf(deviceId))
 
-                val email = payload.subject
+                val email = payload!!.subject
                 val tokens = tokensRepository.generateTokens(CredentialsDto(email, "", deviceId))
 
                 tokensRepository.registerTokens(tokens, deviceId)

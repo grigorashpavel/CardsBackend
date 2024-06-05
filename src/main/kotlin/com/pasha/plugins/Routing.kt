@@ -2,9 +2,11 @@ package com.pasha.plugins
 
 import com.pasha.repositories.tokens.TokensRepository
 import com.pasha.repositories.users.UsersRepository
+import com.pasha.routes.backgrounds.staticBackgrounds
 import com.pasha.routes.exits.stopCurrentSession
 import com.pasha.routes.exits.stopOtherSessions
 import com.pasha.routes.login.loginRoute
+import com.pasha.routes.profile.profile
 import com.pasha.routes.register.registerRoute
 import com.pasha.routes.test.testRoute
 import com.pasha.routes.tokens_refresh.refreshTokensRoute
@@ -22,9 +24,12 @@ fun Application.configureRouting() {
         loginRoute(usersRepository, tokensRepository)
         registerRoute(usersRepository, tokensRepository)
         validateTokensRoute()
+        staticBackgrounds()
         testRoute()
         refreshTokensRoute(tokensRepository)
         stopCurrentSession(tokensRepository)
         stopOtherSessions(usersRepository, tokensRepository)
+
+        profile(usersRepository)
     }
 }

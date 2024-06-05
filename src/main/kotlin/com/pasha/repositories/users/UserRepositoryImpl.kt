@@ -2,6 +2,7 @@ package com.pasha.repositories.users
 
 import com.pasha.database.entities.*
 import com.pasha.models.users.CredentialsDto
+import com.pasha.models.users.User
 import com.pasha.services.database.DatabaseService
 import org.jetbrains.exposed.sql.and
 import org.koin.core.annotation.Single
@@ -53,6 +54,24 @@ class UserRepositoryImpl(
         val deviceEntries = DeviceEntity.find { Devices.userId eq userId }
 
         deviceEntries.map { it.deviceId }
+    }
+
+    override suspend fun getUser(email: String?): User? {
+        if (email == null) return null
+
+        return databaseService.dbQuery {
+            val userId = EmailEntity.find { Emails.email eq email }.firstOrNull()?.userId
+            val user = UserEntity.find { Users.id eq userId }.firstOrNull()
+
+            return@dbQuery if (user != null) {
+                User(
+                    email = email,
+                    username = user.username,
+                    avatarPath = user.avatarPath,
+                    password = null
+                )
+            } else null
+        }
     }
 
     private fun getRandomUsername(): String {
