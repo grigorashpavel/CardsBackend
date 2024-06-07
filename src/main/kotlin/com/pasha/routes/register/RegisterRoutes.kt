@@ -4,6 +4,7 @@ package com.pasha.routes.register
 import com.pasha.models.users.CredentialsDto
 import com.pasha.repositories.tokens.TokensRepository
 import com.pasha.repositories.users.UsersRepository
+import com.pasha.routes.Routes
 import com.pasha.util.Constants
 import com.pasha.validator.Validator
 import io.ktor.http.*
@@ -20,7 +21,7 @@ fun Route.registerRoute(
     usersRepository: UsersRepository,
     tokensRepository: TokensRepository
 ) {
-    post("/auth/register") {
+    post("${Routes.AUTH}/${Routes.Register}") {
         val credentials = call.receive<CredentialsDto>()
         if (!Validator.isEmailValid(credentials.email) || !Validator.isPasswordValid(credentials.password)) {
             call.respond(HttpStatusCode.BadRequest, ERROR_MSG_VALID)

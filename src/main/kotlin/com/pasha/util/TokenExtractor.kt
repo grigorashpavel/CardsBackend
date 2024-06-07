@@ -1,9 +1,8 @@
-package com.pasha.validator
+package com.pasha.util
 
 import com.auth0.jwt.impl.JWTParser
 import com.auth0.jwt.interfaces.Payload
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.request.*
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi

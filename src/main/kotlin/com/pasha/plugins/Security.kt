@@ -11,6 +11,10 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
 import org.koin.ktor.ext.inject
 
+enum class Security(val value: String) {
+    AUTH_JWT("auth-jwt"), REFRESH_JWT("refresh-jwt"), JWT("jwt")
+}
+
 fun Application.configureSecurity() {
     val jwtService: TokensService by inject()
     val usersRepository: UsersRepository by inject()
@@ -31,7 +35,7 @@ fun Application.configureSecurity() {
     }
 
     authentication {
-        jwt("auth-jwt") {
+        jwt(Security.AUTH_JWT.value) {
             realm = jwtService.realm
             verifier(jwtService.verifyJWT(TokenType.ACCESS_TOKEN))
             validate { token ->
@@ -39,10 +43,10 @@ fun Application.configureSecurity() {
             }
             challenge { _, realm ->
                 setupResponseHeaders(call, realm)
-                call.respond(HttpStatusCode.Unauthorized, "")
+                call.respond(HttpStatusCode.Unauthorized)
             }
         }
-        jwt("refresh-jwt") {
+        jwt(Security.REFRESH_JWT.value) {
             realm = jwtService.realm
             verifier(jwtService.verifyJWT(TokenType.REFRESH_TOKEN))
             validate { token ->
@@ -50,10 +54,10 @@ fun Application.configureSecurity() {
             }
             challenge { _, realm ->
                 setupResponseHeaders(call, realm)
-                call.respond(HttpStatusCode.Unauthorized, "")
+                call.respond(HttpStatusCode.Unauthorized)
             }
         }
-        jwt("jwt") {
+        jwt(Security.JWT.value) {
             realm = jwtService.realm
             verifier(jwtService.verifyJWT())
             validate { token ->
@@ -61,7 +65,7 @@ fun Application.configureSecurity() {
             }
             challenge { _, realm ->
                 setupResponseHeaders(call, realm)
-                call.respond(HttpStatusCode.Unauthorized, "")
+                call.respond(HttpStatusCode.Unauthorized)
             }
         }
     }

@@ -4,6 +4,8 @@ package com.pasha.routes.exits
 import com.pasha.models.users.CredentialsDto
 import com.pasha.repositories.tokens.TokensRepository
 import com.pasha.repositories.users.UsersRepository
+import com.pasha.routes.Routes
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -14,7 +16,7 @@ fun Route.stopOtherSessions(
     usersRepository: UsersRepository,
     tokensRepository: TokensRepository
 ) {
-    post("/sessions/stop-other") {
+    post("${Routes.SESSIONS}/${Routes.StopOther}") {
         val credentials = call.receive<CredentialsDto>()
         val deviceId = credentials.deviceId
         val email = credentials.email
@@ -23,6 +25,6 @@ fun Route.stopOtherSessions(
         val otherDevicesId = userDevicesId.toMutableList().apply { remove(deviceId) }
         tokensRepository.revokeTokensByDevicesId(otherDevicesId)
 
-        call.respond("Mb stopped other sessions")
+        call.respond(HttpStatusCode.OK)
     }
 }

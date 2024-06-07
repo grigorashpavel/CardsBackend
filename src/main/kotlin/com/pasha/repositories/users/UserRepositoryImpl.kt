@@ -74,6 +74,30 @@ class UserRepositoryImpl(
         }
     }
 
+    override suspend fun updateUsername(email: String, username: String): Boolean {
+        return databaseService.dbQuery {
+            val isUnique = UserEntity.find { Users.username eq username }.count() == 0L
+
+            val userId = EmailEntity.find { Emails.email eq email }.firstOrNull()?.userId
+            return@dbQuery if (userId != null && username.isNotEmpty() && isUnique) {
+                val user = UserEntity[userId]
+                user.username = username
+
+                true
+
+            } else false
+        }
+    }
+
+    override suspend fun updateAvatarPath(email: String) {
+        databaseService.dbQuery {
+            val userId = EmailEntity.find { Emails.email eq email }.first().userId
+            val user = UserEntity[userId]
+
+            user.avatarPath = "/api/v1/profile/avatar"
+        }
+    }
+
     private fun getRandomUsername(): String {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
 

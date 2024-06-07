@@ -9,5 +9,7 @@ interface UsersRepository {
     suspend fun addUserToDb(credentials: CredentialsDto)
     suspend fun checkUserCredentials(user: CredentialsDto): Boolean
     suspend fun getDevicesIdByUser(email: String): List<String>
-    suspend fun  getUser(email: String?): User?
+    suspend fun getUser(email: String?): User?
+    suspend fun updateUsername(email: String, username: String): Boolean
+    suspend fun updateAvatarPath(email: String)
 }

@@ -4,6 +4,7 @@ package com.pasha.routes.login
 import com.pasha.models.users.CredentialsDto
 import com.pasha.repositories.tokens.TokensRepository
 import com.pasha.repositories.users.UsersRepository
+import com.pasha.routes.Routes
 import com.pasha.util.Constants
 import com.pasha.validator.Validator
 import io.ktor.http.*
@@ -18,7 +19,7 @@ fun Route.loginRoute(
     usersRepository: UsersRepository,
     tokensRepository: TokensRepository
 ) {
-    post("/auth/login") {
+    post("${Routes.AUTH}/${Routes.Login}") {
         val credentials = call.receive<CredentialsDto>()
 
         application.log.info(credentials.toString())
