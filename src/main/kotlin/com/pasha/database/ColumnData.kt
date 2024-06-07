@@ -22,7 +22,8 @@ object ColumnData {
 
     // DEVICES
     const val COL_DEVICE_ID_NAME = "device_id"
-    const val DEVICE_ID_LEN = 32
+    const val COL_DEVICE_NAME = "device_name"
+    const val DEVICE_LEN = 32
 
     // TOKENS
     const val COL_TOKEN_ID_NAME = "token_id"

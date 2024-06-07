@@ -12,7 +12,7 @@ import java.util.*
 object Tokens : UUIDTable() {
     val revoked: Column<Boolean> = bool(ColumnData.COL_REVOKE_STATUS_NAME)
     val expireTime: Column<Long> = long(ColumnData.COL_EXPIRE_TIME_NAME)
-    val deviceId = varchar(ColumnData.COL_DEVICE_ID_NAME, ColumnData.DEVICE_ID_LEN)
+    val deviceId = varchar(ColumnData.COL_DEVICE_ID_NAME, ColumnData.DEVICE_LEN)
 }
 
 class TokenEntity(id: EntityID<UUID>) : UUIDEntity(id) {
