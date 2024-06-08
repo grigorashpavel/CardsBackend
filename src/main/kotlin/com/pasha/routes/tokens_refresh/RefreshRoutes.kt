@@ -27,7 +27,7 @@ fun Route.refreshTokensRoute(tokensRepository: TokensRepository) {
                 tokensRepository.revokeTokensByDevicesId(listOf(deviceId))
 
                 val email = payload!!.subject
-                val tokens = tokensRepository.generateTokens(CredentialsDto(email, "", deviceId))
+                val tokens = tokensRepository.generateTokens(CredentialsDto(email, "", deviceId, ""))
 
                 tokensRepository.registerTokens(tokens, deviceId)
 

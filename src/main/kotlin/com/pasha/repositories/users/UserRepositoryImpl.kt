@@ -2,6 +2,7 @@ package com.pasha.repositories.users
 
 import com.pasha.database.entities.*
 import com.pasha.models.users.CredentialsDto
+import com.pasha.models.users.Device
 import com.pasha.models.users.User
 import com.pasha.services.database.DatabaseService
 import org.jetbrains.exposed.sql.and
@@ -34,6 +35,7 @@ class UserRepositoryImpl(
 
             DeviceEntity.new {
                 deviceId = credentials.deviceId
+                deviceName = credentials.deviceName
                 this.userId = userId
             }
         }
@@ -95,6 +97,45 @@ class UserRepositoryImpl(
             val user = UserEntity[userId]
 
             user.avatarPath = "/api/v1/profile/avatar"
+        }
+    }
+
+    override suspend fun getActiveSessions(email: String): List<Device>? {
+        return databaseService.dbQuery {
+            val userId = EmailEntity.find { Emails.email eq email }.first().userId
+            val userDevices = DeviceEntity.find { Devices.userId eq userId }
+
+            val activeDevices = mutableListOf<Device>()
+            for (device in userDevices) {
+                val deviceTokens = TokenEntity.find { (Tokens.deviceId eq device.deviceId) }
+                for (token in deviceTokens) {
+                    if (token.isRevoked.not()) {
+                        val dev = Device(device.deviceId, device.deviceName)
+                        activeDevices.add(dev)
+                        break
+                    }
+                }
+            }
+
+            return@dbQuery if (activeDevices.size > 0) {
+                activeDevices
+            } else {
+                null
+            }
+        }
+    }
+
+    override suspend fun addDeviceIfNotExist(deviceId: String, deviceName: String, email: String) {
+        databaseService.dbQuery {
+            val notExist = DeviceEntity.find { Devices.deviceId eq deviceId }.count() == 0L
+            if (notExist) {
+                val userId = EmailEntity.find { Emails.email eq email }.first().userId
+                DeviceEntity.new {
+                    this.userId = userId
+                    this.deviceId = deviceId
+                    this.deviceName = deviceName
+                }
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package com.pasha.plugins
 
 import com.pasha.repositories.tokens.TokensRepository
 import com.pasha.repositories.users.UsersRepository
+import com.pasha.routes.active_sessions.activeSessionsRoutes
 import com.pasha.routes.backgrounds.staticBackgrounds
 import com.pasha.routes.exits.stopCurrentSession
 import com.pasha.routes.exits.stopOtherSessions
@@ -31,5 +32,6 @@ fun Application.configureRouting() {
         stopOtherSessions(usersRepository, tokensRepository)
 
         profile(usersRepository)
+        activeSessionsRoutes(usersRepository)
     }
 }

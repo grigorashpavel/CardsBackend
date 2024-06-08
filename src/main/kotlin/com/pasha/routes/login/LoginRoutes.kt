@@ -30,6 +30,7 @@ fun Route.loginRoute(
         }
 
         if (usersRepository.isUserExist(credentials.email) && usersRepository.checkUserCredentials(credentials)) {
+            usersRepository.addDeviceIfNotExist(credentials.deviceId, credentials.deviceName, credentials.email)
             val tokens = tokensRepository.generateTokens(credentials)
             tokensRepository.revokeCurrentDeviceTokens(credentials.deviceId)
             tokensRepository.registerTokens(tokens, credentials.deviceId)

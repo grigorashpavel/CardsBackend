@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 data class CredentialsDto(
     val email: String,
     val password: String,
-    val deviceId: String
+    val deviceId: String,
+    val deviceName: String
 )

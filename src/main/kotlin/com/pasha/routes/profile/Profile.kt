@@ -54,7 +54,7 @@ fun Route.profile(
             call.respond(HttpStatusCode.NotFound, "We can`t find your avatar! Upload it.")
         }
 
-        post("${Routes.API}/${Routes.AvatarProfile}") {
+        post("${Routes.API}/${Routes.Profile}") {
             var username: String? = null
             var avatar: PartData.FileItem? = null
 
