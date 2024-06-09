@@ -34,6 +34,7 @@ object ColumnData {
     const val COL_CARD_NAME_NAME = "card_name"
     const val CARD_NAME_LEN = 32
     const val COL_CARD_PATH_NAME = "card_path"
+    const val COL_CARD_CREATION_NAME = "card_time"
 
     const val SYSTEM_PATH_LEN = 255
 }

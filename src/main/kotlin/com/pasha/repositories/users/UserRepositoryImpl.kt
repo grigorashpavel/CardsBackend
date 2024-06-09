@@ -2,7 +2,7 @@ package com.pasha.repositories.users
 
 import com.pasha.database.entities.*
 import com.pasha.models.users.CredentialsDto
-import com.pasha.models.users.Device
+import com.pasha.models.Device
 import com.pasha.models.users.User
 import com.pasha.services.database.DatabaseService
 import org.jetbrains.exposed.sql.and

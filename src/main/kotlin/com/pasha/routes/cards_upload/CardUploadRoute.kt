@@ -22,6 +22,7 @@ fun Route.cardUploadRoute(
     authenticate(Security.AUTH_JWT.value) {
         post("${Routes.API}/${Routes.Upload}") {
             var cardName: String? = null
+            var createTime: String? = null
             var card: PartData.FileItem? = null
 
             val token = TokenExtractor.extractToken(call.request)
@@ -39,6 +40,8 @@ fun Route.cardUploadRoute(
                     is PartData.FormItem -> {
                         if (part.name == "card_name") {
                             cardName = part.value
+                        } else if (part.name == "create_time") {
+                            createTime = part.value
                         }
                     }
 
@@ -63,13 +66,17 @@ fun Route.cardUploadRoute(
                             cardName!!,
                             path,
                             userId = usersRepository.getUserId(email),
-                            emailId = usersRepository.getEmailId(email)
+                            emailId = usersRepository.getEmailId(email),
+                            creationTime = createTime ?: ""
                         )
+
                     }
 
                     when {
                         isSaved.not() -> call.respond(HttpStatusCode.BadRequest)
-                        else -> call.respond(HttpStatusCode.OK)
+                        else -> {
+                            call.respond(HttpStatusCode.OK)
+                        }
                     }
                 } else {
                     call.respond(HttpStatusCode.BadRequest, "Card Name can`t be empty!")

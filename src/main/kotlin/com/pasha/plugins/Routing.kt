@@ -5,6 +5,7 @@ import com.pasha.repositories.tokens.TokensRepository
 import com.pasha.repositories.users.UsersRepository
 import com.pasha.routes.active_sessions.activeSessionsRoutes
 import com.pasha.routes.backgrounds.staticBackgrounds
+import com.pasha.routes.cards.cardsRoutes
 import com.pasha.routes.cards_upload.cardUploadRoute
 import com.pasha.routes.exits.stopCurrentSession
 import com.pasha.routes.exits.stopOtherSessions
@@ -37,5 +38,6 @@ fun Application.configureRouting() {
         profile(usersRepository)
         activeSessionsRoutes(usersRepository)
         cardUploadRoute(cardsRepository, usersRepository)
+        cardsRoutes(usersRepository, cardsRepository)
     }
 }

@@ -1,8 +1,7 @@
 package com.pasha.repositories.users
 
-import com.pasha.database.entities.UserEntity
 import com.pasha.models.users.CredentialsDto
-import com.pasha.models.users.Device
+import com.pasha.models.Device
 import com.pasha.models.users.User
 import java.util.UUID
 

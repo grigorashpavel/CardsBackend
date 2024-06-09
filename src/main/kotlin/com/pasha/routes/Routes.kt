@@ -23,4 +23,10 @@ object Routes {
     const val Profile = "profile"
     const val AvatarProfile = "profile/avatar"
     const val Upload = "upload"
+
+    const val AllCards = "cards"
+    const val CardById = "cards/by-id/{id}"
+    const val CardsByName = "cards/{name}"
+    const val DeleteCard = "cards/{id}"
+    const val EditCard = "cards/{id}"
 }

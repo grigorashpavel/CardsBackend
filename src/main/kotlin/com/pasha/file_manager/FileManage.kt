@@ -36,5 +36,24 @@ class FileManager private constructor() {
             }
             return false
         }
+
+        fun removeFileByPath(path: String): Boolean {
+            val file = File(path)
+            if (file.exists()) {
+                file.delete()
+                return true
+            }
+
+            return false
+        }
+
+        fun getFile(path: String): File? {
+            val file = File(path)
+            if (file.exists()) {
+                return file
+            } else {
+                return null
+            }
+        }
     }
 }
