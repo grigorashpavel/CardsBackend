@@ -13,14 +13,18 @@ class FileManager private constructor() {
             return "${Constants.USR_DIRS_PATH}$email"
         }
 
-        fun saveFileByPartData(parts: PartData.FileItem?, path: String): Boolean {
-            if (parts != null) {
-                val originalFileName = parts.originalFileName ?: return false
-                //val fileExtension = originalFileName.substringAfterLast('.')
-                val fileExtension = "jpg"
-                val fileName = "avatar.$fileExtension"
+        fun createCardDirectoryIfNotExist(email: String): String {
+            val directory = File("${Constants.USR_DIRS_PATH}$email/cards/")
+            if (directory.exists().not()) directory.mkdirs()
 
-                val file = File(path, fileName)
+            return "${Constants.USR_DIRS_PATH}$email/cards/"
+        }
+
+
+        fun saveFileByPartData(parts: PartData.FileItem?, path: String, fileName: String = ""): Boolean {
+            if (parts != null) {
+                val name = fileName.ifEmpty { "avatar.jpg" }
+                val file = File(path, name)
 
                 parts.streamProvider().use { input ->
                     file.outputStream().buffered().use { output ->

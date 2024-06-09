@@ -139,6 +139,18 @@ class UserRepositoryImpl(
         }
     }
 
+    override suspend fun getEmailId(email: String): UUID {
+        return databaseService.dbQuery {
+            EmailEntity.find { Emails.email eq email }.first().emailId
+        }
+    }
+
+    override suspend fun getUserId(email: String): UUID {
+        return databaseService.dbQuery {
+            EmailEntity.find { Emails.email eq email }.first().userId
+        }
+    }
+
     private fun getRandomUsername(): String {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
 

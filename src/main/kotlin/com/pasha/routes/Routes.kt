@@ -22,4 +22,5 @@ object Routes {
     const val RandomBackgrounds = "backgrounds/random"
     const val Profile = "profile"
     const val AvatarProfile = "profile/avatar"
+    const val Upload = "upload"
 }

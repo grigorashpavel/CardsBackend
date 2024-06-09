@@ -11,7 +11,7 @@ import java.util.UUID
 
 object Cards : UUIDTable() {
     val cardName: Column<String> = varchar(ColumnData.COL_CARD_NAME_NAME, ColumnData.CARD_NAME_LEN)
-    val cardDocument: Column<ExposedBlob> = blob(ColumnData.COL_CARD_DOCUMENT_NAME)
+    val cardPath: Column<String> = varchar(ColumnData.COL_CARD_PATH_NAME, ColumnData.SYSTEM_PATH_LEN)
     val userId: Column<UUID> = uuid(ColumnData.COL_USERNAME_NAME)
     val emailId: Column<UUID> = uuid(ColumnData.COL_EMAIL_ID_NAME)
 }
@@ -21,7 +21,7 @@ class CardEntity(id: EntityID<UUID>) : UUIDEntity(id) {
 
     val cardId: UUID get() = id.value
     var cardName by Cards.cardName
-    var document by Cards.cardDocument
+    var cardPath by Cards.cardPath
     var userId by Cards.userId
     var emailId by Cards.emailId
 }

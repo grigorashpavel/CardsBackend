@@ -1,9 +1,11 @@
 package com.pasha.plugins
 
+import com.pasha.repositories.cards.CardsRepository
 import com.pasha.repositories.tokens.TokensRepository
 import com.pasha.repositories.users.UsersRepository
 import com.pasha.routes.active_sessions.activeSessionsRoutes
 import com.pasha.routes.backgrounds.staticBackgrounds
+import com.pasha.routes.cards_upload.cardUploadRoute
 import com.pasha.routes.exits.stopCurrentSession
 import com.pasha.routes.exits.stopOtherSessions
 import com.pasha.routes.login.loginRoute
@@ -20,6 +22,7 @@ import org.koin.ktor.ext.inject
 fun Application.configureRouting() {
     val usersRepository: UsersRepository by inject()
     val tokensRepository: TokensRepository by inject()
+    val cardsRepository: CardsRepository by inject()
 
     routing {
         loginRoute(usersRepository, tokensRepository)
@@ -33,5 +36,6 @@ fun Application.configureRouting() {
 
         profile(usersRepository)
         activeSessionsRoutes(usersRepository)
+        cardUploadRoute(cardsRepository, usersRepository)
     }
 }

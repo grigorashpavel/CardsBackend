@@ -2,10 +2,7 @@ package com.pasha.services.database
 
 
 import com.pasha.config.AppConfig
-import com.pasha.database.entities.Devices
-import com.pasha.database.entities.Emails
-import com.pasha.database.entities.Tokens
-import com.pasha.database.entities.Users
+import com.pasha.database.entities.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -45,7 +42,7 @@ class DatabaseService(
 
     private suspend fun createTables() = withContext(Dispatchers.IO) {
         launch {
-            val tables = listOf(Devices, Emails, Tokens, Users)
+            val tables = listOf(Devices, Emails, Tokens, Users, Cards)
             transaction(database) {
                 SchemaUtils.create(tables = tables.toTypedArray())
             }

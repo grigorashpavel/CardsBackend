@@ -4,6 +4,7 @@ import com.pasha.database.entities.UserEntity
 import com.pasha.models.users.CredentialsDto
 import com.pasha.models.users.Device
 import com.pasha.models.users.User
+import java.util.UUID
 
 interface UsersRepository {
     suspend fun isUserExist(email: String): Boolean
@@ -15,4 +16,6 @@ interface UsersRepository {
     suspend fun updateAvatarPath(email: String)
     suspend fun getActiveSessions(email: String): List<Device>?
     suspend fun addDeviceIfNotExist(deviceId: String, deviceName: String, email: String)
+    suspend fun getEmailId(email: String): UUID
+    suspend fun getUserId(email: String): UUID
 }
